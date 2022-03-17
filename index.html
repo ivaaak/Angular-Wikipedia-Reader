@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" >
 <head>
-  	<meta charset="UTF-8">
-  	<title>Angular Wikipedia Viewer</title>
-  	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.6/angular-material.min.css'>
-	<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
-	<link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <title>Angular Wikipedia Viewer</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.6/angular-material.min.css'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+   <link rel="stylesheet" href="./style.css">
 </head>
 
 <body ng-app="wikipediaApp" ng-cloak>
@@ -33,47 +33,46 @@
 		</md-list>
     </md-content>
     </md-sidenav>
+	  
+    <md-content layout="column" flex>
+    <md-toolbar class="md-medium-tall">
+	<h1 class="title"> Wikipedia Viewer</h1>
+	</md-toolbar>	
+	<section layout-padding class="results" flex="60" layout="row" layout-align="center center" ng-show="!main.hasData()">
+		<md-card class="focused" >
+			<md-card-title>
+				<md-card-title-text>
+					<div class="md-headline banner">Use the Search to find an article to display here. 
+					<br>Perhaps I can interest you in a random article?</div>
+				</md-card-title-text>
+			</md-card-title>
+		<md-card-actions layout="row" layout-align="center center">
+				<md-button href="http://en.wikipedia.org/wiki/Special:Random" class="md-raised md-primary" aria-label="Random" >Random</md-button>
+			</md-card-actions>
+		</md-card>
+	</section>
 		
-	<md-content layout="column" flex>
-		<md-toolbar class="md-medium-tall">
-			<h1 class="title"> Wikipedia Viewer</h1>
-		</md-toolbar>	
-			
-		<section layout-padding class="results" flex="60" layout="row" layout-align="center center" ng-show="!main.hasData()">
-			<md-card class="focused" >
-				<md-card-title>
-					<md-card-title-text>
-						<div class="md-headline banner">Use the Search to find an article to display here. 
-							<br>Perhaps I can interest you in a random article?</div>
-					</md-card-title-text>
-				</md-card-title>
-			<md-card-actions layout="row" layout-align="center center">
-					<md-button href="http://en.wikipedia.org/wiki/Special:Random" class="md-raised md-primary" aria-label="Random" >Random</md-button>
-				</md-card-actions>
-			</md-card>
-		</section>
-	
-		<section layout-padding class="results" flex="60" layout="row" layout-align="center top" ng-show="main.hasData()">
-			<md-card class="focused" >
-				<md-card-title>
-					<md-card-title-text>
-						<span class="md-headline">
-							{{main.focusedArticle.title}}
-						</span>
-					</md-card-title-text>
-					<md-divider></md-divider>
-					<md-card-title-media ng-show="main.hasThumbnail">
-						<div class="md-media-md card-media">
-							<img ng-src="{{main.articleThumbnail.source}}" alt=""/>
-						</div>
-					</md-card-title-media>
-				</md-card-title>
-				<md-card-content>
-					<div class="extract">{{main.focusedArticle.extract}}</div>
-					<div class="link" ><a href="{{main.articleURL}}">Full Article</a></div>
-				</md-card-content>
-			</md-card>
-		</section>
+	<section layout-padding class="results" flex="60" layout="row" layout-align="center top" ng-show="main.hasData()">
+		<md-card class="focused" >
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-headline">
+						{{main.focusedArticle.title}}
+					</span>
+				</md-card-title-text>
+				<md-divider></md-divider>
+				<md-card-title-media ng-show="main.hasThumbnail">
+					<div class="md-media-md card-media">
+						<img ng-src="{{main.articleThumbnail.source}}" alt=""/>
+					</div>
+				</md-card-title-media>
+			</md-card-title>
+			<md-card-content>
+				<div class="extract">{{main.focusedArticle.extract}}</div>
+				<div class="link" ><a href="{{main.articleURL}}">Full Article</a></div>
+			</md-card-content>
+		</md-card>
+	</section>
 	</md-content>	
 	</div>
 
