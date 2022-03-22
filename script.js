@@ -13,14 +13,14 @@ app.controller("MainController", function($scope, $log, dataService){
 		});
 	};
 		
-	//build wikipedia page URL
+	//build wikipedia page URL from link parts
 	function setArticle(pageId){
 		main.focusedArticle = main.response[pageId];
 		main.articleThumbnail = hasThumbnail(main.focusedArticle);
 		main.articleURL = urlBase + pageId;
 	}
 	
-	//check for a thumbnail
+	//check if a thumbnail exists
 	function hasThumbnail(obj){
 		if(obj.hasOwnProperty('thumbnail')){
 			main.hasThumbnail = true;
@@ -51,7 +51,7 @@ app.service('dataService', function($http, $log, $q){
   var apiBase = 'https://en.wikipedia.org/w/api.php?';
   this.searchWikipedia = function(term){
     var query = 'action=query&format=json&generator=search&gsrnamespace=0&gsrlimit=10&prop=pageimages|extracts&pilimit=max&exintro&explaintext&exsentences=1&exlimit=max&gsrsearch=';
-		var callback = '&callback=JSON_CALLBACK';
+    var callback = '&callback=JSON_CALLBACK';
     var deferred = $q.defer();
     $http.jsonp(apiBase + query + term + callback)
       .success(function(data){
