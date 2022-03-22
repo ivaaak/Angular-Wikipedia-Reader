@@ -13,13 +13,14 @@ app.controller("MainController", function($scope, $log, dataService){
 		});
 	};
 		
-	
+	//build wikipedia page URL
 	function setArticle(pageId){
 		main.focusedArticle = main.response[pageId];
 		main.articleThumbnail = hasThumbnail(main.focusedArticle);
 		main.articleURL = urlBase + pageId;
 	}
 	
+	//check for a thumbnail
 	function hasThumbnail(obj){
 		if(obj.hasOwnProperty('thumbnail')){
 			main.hasThumbnail = true;
