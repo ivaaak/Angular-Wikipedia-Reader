@@ -1,34 +1,86 @@
 <!DOCTYPE html>
 <html lang="en" >
 <head>
-  <meta charset="UTF-8">
-  <title>Angular Wikipedia Link Viewer</title>
-  <link rel="stylesheet" href="./style.css">
-
+  	<meta charset="UTF-8">
+  	<title>Angular Wikipedia Viewer</title>
+  	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.6/angular-material.min.css'>
+	<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+	<link rel="stylesheet" href="./style.css">
 </head>
-<body>
-  <h1>Wikipedia</h1>
-  <h1>Article Viewer</h1>
 
-  <main ng-app="WikipediaArticles" ng-controller="MainCtrl">
-    <div class="wrapper fullHeight" id="search"><a class="white-text" href="https://en.wikipedia.org/wiki/Special:Random" target="_blank">Click here for a random article</a><br/>
-      <form ng-submit="search()">
-        <input type="text" ng-model="searchTxt"/>
-        <div class="eks"></div>
-      </form>
-      <p class="white-text" id="help">Click icon to search</p>
-    </div>
-    <div class="wrapper">
-      <ul><a ng-href="{{result.page}}" target="_blank" ng-repeat="result in results">
-          <li>
-            <h2>{{result.title}}</h2>
-            <p>{{result.body}}</p>
-          </li></a></ul>
-    </div>
-  </main>
+<body ng-app="wikipediaApp" ng-cloak>
+  <div class="content" ng-controller="MainController as main" layout="row">
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true" layout="column">
+    <md-toolbar>
+        <h1 class="md-toolbar-tools"></h1>
+    </md-toolbar>
+    <md-content layout="column" layout-padding>
+		<form ng-submit="main.searchWikipedia(main.term)">
+			<md-input-container>
+				<label for="search">Search</label>
+				<input id="search" ng-model="main.term" autofocus>
+			</md-input-container>
+			<div layout="row" layout-align="center center">
+				<md-button class="md-raised md-primary" aria-label="Search" ng-click="main.searchWikipedia(main.term)">Search</md-button>
+				<md-button class="md-raised md-primary" aria-label="Clear" ng-click="main.clear()">Clear</md-button>
+			</div>			
+		</form>
+		<md-divider></md-divider>
+		<md-list layout="column">
+			<md-list-item ng-repeat="item in main.response" layout="row" layout-align="space-between center" ng-click="main.setArticle(item.pageid)" class="md-whiteframe-1dp">
+				<div flex >{{item.title}}</div>						
+			</md-list-item>
+		</md-list>
+    </md-content>
+    </md-sidenav>
+		
+	<md-content layout="column" flex>
+		<md-toolbar class="md-medium-tall">
+			<h1 class="title"> Wikipedia Viewer</h1>
+		</md-toolbar>	
+			
+		<section layout-padding class="results" flex="60" layout="row" layout-align="center center" ng-show="!main.hasData()">
+			<md-card class="focused" >
+				<md-card-title>
+					<md-card-title-text>
+						<div class="md-headline banner">Use the Search to find an article to display here. 
+							<br>Perhaps I can interest you in a random article?</div>
+					</md-card-title-text>
+				</md-card-title>
+			<md-card-actions layout="row" layout-align="center center">
+					<md-button href="http://en.wikipedia.org/wiki/Special:Random" class="md-raised md-primary" aria-label="Random" >Random</md-button>
+				</md-card-actions>
+			</md-card>
+		</section>
+	
+		<section layout-padding class="results" flex="60" layout="row" layout-align="center top" ng-show="main.hasData()">
+			<md-card class="focused" >
+				<md-card-title>
+					<md-card-title-text>
+						<span class="md-headline">
+							{{main.focusedArticle.title}}
+						</span>
+					</md-card-title-text>
+					<md-divider></md-divider>
+					<md-card-title-media ng-show="main.hasThumbnail">
+						<div class="md-media-md card-media">
+							<img ng-src="{{main.articleThumbnail.source}}" alt=""/>
+						</div>
+					</md-card-title-media>
+				</md-card-title>
+				<md-card-content>
+					<div class="extract">{{main.focusedArticle.extract}}</div>
+					<div class="link" ><a href="{{main.articleURL}}">Full Article</a></div>
+				</md-card-content>
+			</md-card>
+		</section>
+	</md-content>	
+	</div>
 
-  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.2/angular-animate.min.js'></script><script  src="./script.js"></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular.min.js'></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js'></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-aria.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.6/angular-material.min.js'></script>
+	<script  src="./script.js"></script>
 </body>
 </html>
